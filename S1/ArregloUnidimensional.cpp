@@ -111,30 +111,94 @@ public:
         }
         cout << "]" << endl;
     }
-};
 
-// Función main para probar la clase 
-int main() {
-    try {
-        ArregloUnidimensional arreglo;
-        
-        arreglo.insertar(0, "Hugo");
-        arreglo.insertar(1, "Paco");
-        arreglo.insertar(2, "Luis");
-        
-        cout << "Estado inicial: ";
-        arreglo.imprimir();
+    // MÉTODOS DE LA TAREA S1_2
 
-        cout << "Eliminando indice 1 (" << arreglo.eliminar(1) << ")..." << endl;
-        arreglo.imprimir();
-
-        cout << "Insertando Donald en indice 0..." << endl;
-        arreglo.insertar(0, "Donald");
-        arreglo.imprimir();
-
-    } catch (const exception& e) {
-        cerr << "Error: " << e.what() << endl;
+    /**
+     * 1. Búsqueda por valor (Lineal)
+     * Recorre el arreglo buscando el nombre.
+     * @return índice del nombre o -1 si no existe.
+     */
+    int buscar(string nombre) {
+        for (int i = 0; i < tamano; i++) {
+            if (elementos[i] == nombre) {
+                return i;
+            }
+        }
+        return -1; // No encontrado
     }
 
-    return 0;
-}
+    /**
+     * 2. Ordenamiento (Burbuja - Natural/Alfabético)
+     * Ordena los nombres de A a Z.
+     */
+    void ordenar() {
+        for (int i = 0; i < tamano - 1; i++) {
+            for (int j = 0; j < tamano - i - 1; j++) {
+                // El operador > en string compara alfabéticamente
+                if (elementos[j] > elementos[j + 1]) {
+                    string temp = elementos[j];
+                    elementos[j] = elementos[j + 1];
+                    elementos[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    /**
+     * 3. Inversión del arreglo
+     * Invierte el orden de los elementos actuales.
+     */
+    void invertir() {
+        for (int i = 0; i < tamano / 2; i++) {
+            string temp = elementos[i];
+            int indiceContrario = tamano - 1 - i;
+            elementos[i] = elementos[indiceContrario];
+            elementos[indiceContrario] = temp;
+        }
+    }
+
+    /**
+     * 4. Búsqueda Binaria
+     * IMPORTANTE: El arreglo DEBE estar ordenado previamente.
+     * Divide el arreglo en mitades para buscar más rápido.
+     */
+    int busquedaBinaria(string nombre) {
+        int izquierda = 0;
+        int derecha = tamano - 1;
+
+        while (izquierda <= derecha) {
+            int medio = izquierda + (derecha - izquierda) / 2;
+
+            if (elementos[medio] == nombre)
+                return medio; // Encontrado
+
+            if (elementos[medio] < nombre)
+                izquierda = medio + 1; // Buscar en la mitad derecha
+            else
+                derecha = medio - 1; // Buscar en la mitad izquierda
+        }
+        return -1; // No encontrado
+    }
+
+    /**
+     * 5. Inserción en arreglo ordenado
+     * Inserta un elemento manteniendo el orden alfabético.
+     * Asume que el arreglo ya está ordenado.
+     */
+    void insertarOrdenado(string nombre) {
+        if (tamano == CAPACIDAD_MAXIMA) throw runtime_error("Arreglo Lleno");
+        if (nombre.empty()) return;
+
+        int i = tamano - 1;
+        // Mueve los elementos mayores hacia la derecha para hacer hueco
+        while (i >= 0 && elementos[i] > nombre) {
+            elementos[i + 1] = elementos[i];
+            i--;
+        }
+        
+        // Inserta en la posición correcta
+        elementos[i + 1] = nombre;
+        tamano++;
+    }
+};

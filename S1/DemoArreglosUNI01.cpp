@@ -44,5 +44,36 @@ int main() {
     cout << "Despues de eliminar indice 4" << endl;
     arr.imprimir();
 
+    // PROBANDO METODOS DE LA TAREA S1_2
+    // 2. Búsqueda Lineal
+    cout << "\n--- BUSQUEDA LINEAL ---" << endl;
+    string buscado = "Luis";
+    int pos = arr.buscar(buscado);
+    cout << "Buscando a '" << buscado << "': " << (pos != -1 ? "Encontrado en indice " + to_string(pos) : "No encontrado") << endl;
+
+    // 3. Inversión
+    cout << "\n--- INVERSION DEL ARREGLO ---" << endl;
+    arr.invertir();
+    arr.imprimir();
+    
+    // Regresamos a la normalidad invirtiendo de nuevo (opcional, para probar ordenamiento después)
+    arr.invertir(); 
+
+    // 4. Ordenamiento
+    cout << "\n--- ORDENAMIENTO (ALFABETICO) ---" << endl;
+    arr.ordenar();
+    arr.imprimir();
+
+    // 5. Búsqueda Binaria (Solo funciona si está ordenado)
+    cout << "\n--- BUSQUEDA BINARIA ---" << endl;
+    buscado = "Maria";
+    pos = arr.busquedaBinaria(buscado);
+    cout << "Buscando a '" << buscado << "' (Binaria): " << (pos != -1 ? "Encontrado en indice " + to_string(pos) : "No encontrado") << endl;
+
+    // 6. Inserción Ordenada
+    cout << "\n--- INSERCION ORDENADA (Insertando 'Dario') ---" << endl;
+    arr.insertarOrdenado("Dario"); 
+    arr.imprimir();
+
     return 0;
 }
